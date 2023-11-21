@@ -1,0 +1,76 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "TODO Plugin",
+        "description": "A plugin that allows the user to create and manage a TODO list using ChatGPT.",
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "https://custom-gpt-01.onrender.com"
+        }
+    ],
+    "paths": {
+        "/todos": {
+            "get": {
+                "operationId": "getTodos",
+                "summary": "Get the list of todos",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getTodosResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/linkedin": {
+            "get": {
+                "operationId": "getLinkedInAuthFlow",
+                "summary": "Get the url for user to start Oauth flow to login into their Linked Profile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getRedirectUrlResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "getTodosResponse": {
+                "type": "object",
+                "properties": {
+                    "todos": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "The list of todos."
+                    }
+                }
+            },
+            "getRedirectUrlResponse": {
+                "type": "object",
+                "properties": {
+                    "redirectUrl": {
+                        "type": "string",
+                        "description": "The url that is shown to the user for them to click to start the auth flow."
+                    }
+                }
+            }
+        }
+    }
+}
