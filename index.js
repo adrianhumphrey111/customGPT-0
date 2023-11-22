@@ -93,6 +93,7 @@ app.get('/auth/linkedin', (req, res) => {
   // Every conversation needs to have an access token
   const conversationId = req.headers['openai-conversation-id'] || ''
   const linkedInAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&state=${conversationId}&scope=openid%20profile%20w_member_social%20email%20email`;
+  console.log(conversationId)
   res.redirect(linkedInAuthURL)
 });
 
@@ -245,12 +246,12 @@ app.post('/post/imageShare', async (req, res) => {
   }
 })
 
-
-
 // Callback route
 app.get('/auth/linkedin/callback', async (req, res) => {
   const code = req.query.code;
   const conversationId = req.query.state
+  console.log(" ================ ")
+  console.log({query: req.query})
   try {
     const response = await axios.post('https://www.linkedin.com/oauth/v2/accessToken', null, {
       params: {
