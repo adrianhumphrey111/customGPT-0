@@ -105,6 +105,7 @@ app.post('/post/text', async (req, res) => {
   const { userURN } = accessTokeMapByConversation.get(conversationId)
   const today = new Date()
   const { customText } = req.body
+  console.log({ customText })
   const textPost = {
     "author": `urn:li:person:${userURN}`,
     "lifecycleState": "PUBLISHED",
@@ -120,6 +121,7 @@ app.post('/post/text', async (req, res) => {
       "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
     }
   }
+  console.log({ textPost })
 
   try {
     const testTextPost = await axios.post('https://api.linkedin.com/v2/ugcPosts', textPost, {
@@ -127,6 +129,7 @@ app.post('/post/text', async (req, res) => {
     })
     res.status(200).send()
   } catch (e) {
+    console.log(e)
     res.status(500).send()
   }
 })
