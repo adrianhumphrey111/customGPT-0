@@ -99,7 +99,7 @@ app.get('/auth/linkedin', (req, res) => {
 app.post('/post/text', async (req, res) => {
   const conversationId = req.headers['openai-conversation-id'] || ''
   console.log({conversationId})
-  console.log(accessTokeMapByConversation.get(conversationId))
+  console.log(accessTokeMapByConversation)
   const { userURN } = accessTokeMapByConversation.get(conversationId)
   const today = new Date()
   const { customText } = req.body

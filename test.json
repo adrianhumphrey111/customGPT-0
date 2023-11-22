@@ -74,3 +74,59 @@
         }
     }
 }
+
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "TODO Plugin",
+        "description": "A plugin that allows the user to create and manage a TODO list using ChatGPT.",
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "https://custom-gpt-01.onrender.com"
+        }
+    ],
+    "paths": {
+        "/todos": {
+            // existing /todos endpoint details...
+        },
+        "/post/text": {
+            "post": {
+                "operationId": "postText",
+                "summary": "Post a custom text",
+                "description": "Posts a custom text to a specified service",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "customText": {
+                                        "type": "string",
+                                        "description": "The custom text to be posted"
+                                    }
+                                },
+                                "required": ["customText"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            // existing schemas...
+        }
+    }
+}
