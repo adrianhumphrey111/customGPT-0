@@ -102,7 +102,7 @@ app.post('/post/text', async (req, res) => {
   const conversationId = req.headers['openai-conversation-id'] || ''
   console.log({conversationId})
   console.log(accessTokeMapByConversation)
-  const { userURN } = accessTokeMapByConversation.get(conversationId)
+  const { userURN, accessToken } = accessTokeMapByConversation.get(conversationId)
   const today = new Date()
   const { customText } = req.body
   console.log({ customText })
@@ -124,6 +124,10 @@ app.post('/post/text', async (req, res) => {
   console.log({ textPost })
 
   try {
+    const userInfoHeaders = {
+      'Authorization': `Bearer ${accessToken}`,
+      'X-Restli-Protocol-Version': '2.0.0'
+    }
     const testTextPost = await axios.post('https://api.linkedin.com/v2/ugcPosts', textPost, {
       headers: userInfoHeaders
     })
