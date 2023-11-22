@@ -98,6 +98,8 @@ app.get('/auth/linkedin', (req, res) => {
 
 app.post('/post/text', async (req, res) => {
   const conversationId = req.headers['openai-conversation-id'] || ''
+  console.log({conversationId})
+  console.log(accessTokeMapByConversation.get(conversationId))
   const { userURN } = accessTokeMapByConversation.get(conversationId)
   const today = new Date()
   const { customText } = req.body
@@ -281,6 +283,7 @@ app.get('/auth/linkedin/callback', async (req, res) => {
       idToken,
       userURN
     }
+    console.log({tokens})
     accessTokeMapByConversation.set(conversationId, tokens)
     res.redirect(`https://chat.openai.com/g/g-rjOQjMfZB-larry/c/${conversationId}`)
   } catch (error) {
