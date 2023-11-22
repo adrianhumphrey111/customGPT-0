@@ -12,10 +12,11 @@ const fsPromise = require('fs/promises');
 
 const CLIENT_ID = '86evj6mojpyxvv';
 const CLIENT_SECRET = 'XLbTDKBqLYHo6n51';
-const REDIRECT_URI = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/auth/linkedin/callback' : 'https://custom-gpt-01.onrender.com/auth/linkedin/callback';
+const REDIRECT_URI = 'https://custom-gpt-01.onrender.com/auth/linkedin/callback';
 
 // Enable CORS for all routes
 app.use(cors());
+app.use(express.json());
 const port = 3001
 
 const accessTokeMapByConversation = new Map()
@@ -99,13 +100,14 @@ app.post('/post/text', async (req, res) => {
   const conversationId = req.headers['openai-conversation-id'] || ''
   const { userURN } = accessTokeMapByConversation.get(conversationId)
   const today = new Date()
+  const { customText } = req.body
   const textPost = {
     "author": `urn:li:person:${userURN}`,
     "lifecycleState": "PUBLISHED",
     "specificContent": {
       "com.linkedin.ugc.ShareContent": {
         "shareCommentary": {
-          "text": `CustomGPT #1 Just posted to my linked automatically with out me @ ${today.toString()}`
+          "text": customText
         },
         "shareMediaCategory": "NONE"
       }
@@ -123,7 +125,6 @@ app.post('/post/text', async (req, res) => {
   } catch (e) {
     res.status(500).send()
   }
-
 })
 
 app.post('/post/article', async (req, res) => {
