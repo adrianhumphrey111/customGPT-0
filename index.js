@@ -94,7 +94,7 @@ app.get('/auth/linkedin', (req, res) => {
   const conversationId = req.headers['openai-conversation-id'] || ''
   const linkedInAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&state=${conversationId}&scope=openid%20profile%20w_member_social%20email%20email`;
   console.log(conversationId)
-  res.redirect(linkedInAuthURL)
+  res.json({ redirectUrl: linkedInAuthURL })
 });
 
 app.post('/post/text', async (req, res) => {
